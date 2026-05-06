@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 import json
 
-from .. import models, auth, schemas
-from ..database import get_db
-from ..services.gemini_service import generate_question
+import models, auth, schemas
+from database import get_db
+from services.gemini_service import generate_question
 
 router = APIRouter()
 

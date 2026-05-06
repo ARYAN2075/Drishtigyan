@@ -5,9 +5,9 @@ from datetime import datetime, timedelta
 from typing import Optional
 import json
 
-from .. import models, auth
-from ..database import get_db
-from ..services.gemini_service import generate_ai_insight_for_student, generate_intervention_plan
+import models, auth
+from database import get_db
+from services.gemini_service import generate_ai_insight_for_student, generate_intervention_plan
 
 router = APIRouter()
 
@@ -67,7 +67,7 @@ def get_dashboard(current_user: models.User = Depends(auth.get_current_teacher),
         })
         
         root_cause_topic = None
-        from ..models import TopicDependency, StudentConceptMastery
+        from models import TopicDependency, StudentConceptMastery
         dependencies = db.query(TopicDependency).filter(TopicDependency.topic_id == t_id).all()
         for dep in dependencies:
             prereq = db.query(models.Topic).filter(models.Topic.id == dep.prerequisite_id).first()
@@ -244,7 +244,7 @@ def get_students(current_user: models.User = Depends(auth.get_current_teacher), 
         weak = db.query(models.StudentConceptMastery).filter(models.StudentConceptMastery.student_id == s.id, models.StudentConceptMastery.mastery_score < 0.5).count()
         
         # Calculate risk Score
-        from ..services.risk_scorer import calculate_risk_score
+        from services.risk_scorer import calculate_risk_score
         risk_score = calculate_risk_score(s.id, db)
         
         risk_level = "On Track"
@@ -296,7 +296,7 @@ def get_student_detail(student_id: int, current_user: models.User = Depends(auth
             "status": status
         })
         
-    from ..services.risk_scorer import calculate_risk_score
+    from services.risk_scorer import calculate_risk_score
     risk_score = calculate_risk_score(s.id, db)
     risk_level = "On Track"
     if risk_score >= 0.6: risk_level = "At Risk"
@@ -385,7 +385,7 @@ def get_ai_insight(student_id: int, current_user: models.User = Depends(auth.get
     s = db.query(models.User).filter(models.User.id == student_id).first()
     if not s: raise HTTPException(404, "Student not found")
         
-    from ..services.risk_scorer import calculate_risk_score
+    from services.risk_scorer import calculate_risk_score
     risk_score = calculate_risk_score(s.id, db)
     risk_level = "On Track"
     if risk_score >= 0.6: risk_level = "At Risk"

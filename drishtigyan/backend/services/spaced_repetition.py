@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta, timezone
 from typing import List
 
-from ..models import StudentConceptMastery, Topic, Quiz
+from models import StudentConceptMastery, Topic, Quiz
 
 def schedule_review(student_id: int, topic_id: int, is_correct: bool, db: Session):
     record = db.query(StudentConceptMastery).filter(

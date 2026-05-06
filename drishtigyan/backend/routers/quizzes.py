@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from typing import List, Optional
 
-from .. import models, auth, schemas
-from ..database import get_db
-from ..services.gap_detection import analyze_quiz_attempt
+import models, auth, schemas
+from database import get_db
+from services.gap_detection import analyze_quiz_attempt
 
 router = APIRouter()
 

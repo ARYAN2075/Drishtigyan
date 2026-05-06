@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta, timezone
-from ..models import QuizAttempt, Response, StudentConceptMastery
+from models import QuizAttempt, Response, StudentConceptMastery
 
 def calculate_risk_score(student_id: int, db: Session) -> float:
     # Get all attempts sorted by most recent first

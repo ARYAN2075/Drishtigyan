@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 import math
-from ..models import StudentConceptMastery, Question, Topic
+from models import StudentConceptMastery, Question, Topic
 
 def update_irt_theta(student_id: int, topic_id: int, is_correct: bool, question_difficulty_b: float, db: Session):
     record = db.query(StudentConceptMastery).filter(

@@ -2,10 +2,10 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 from typing import List
 
-from ..models import QuizAttempt, Response, Question, StudentConceptMastery, Topic, TopicDependency
-from .irt_engine import update_irt_theta
-from .spaced_repetition import schedule_review
-from .risk_scorer import calculate_risk_score
+from models import QuizAttempt, Response, Question, StudentConceptMastery, Topic, TopicDependency
+from services.irt_engine import update_irt_theta
+from services.spaced_repetition import schedule_review
+from services.risk_scorer import calculate_risk_score
 
 def analyze_quiz_attempt(attempt_id: int, db: Session):
     attempt = db.query(QuizAttempt).filter(QuizAttempt.id == attempt_id).first()

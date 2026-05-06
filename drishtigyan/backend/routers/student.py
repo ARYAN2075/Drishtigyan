@@ -5,9 +5,11 @@ from datetime import datetime
 import json
 import os
 
-from .. import models, auth
-from ..database import get_db
-from ..services.spaced_repetition import get_practice_queue
+import models
+import auth
+
+from database import get_db
+from services.spaced_repetition import get_practice_queue
 
 # Map Weak topics to Video resources
 VIDEO_MAP = {
@@ -94,7 +96,7 @@ def get_dashboard(current_user: models.User = Depends(auth.get_current_student),
         root_cause_explanation = None
 
         # Check for root cause
-        from ..models import TopicDependency
+        from models import TopicDependency
         dependencies = db.query(TopicDependency).filter(TopicDependency.topic_id == topic.id).all()
         for dep in dependencies:
             prereq = db.query(models.Topic).filter(models.Topic.id == dep.prerequisite_id).first()
@@ -477,7 +479,7 @@ def get_knowledge_map(current_user: models.User = Depends(auth.get_current_stude
 
     edges = []
     
-    from ..models import TopicDependency
+    from models import TopicDependency
     # Real dependencies based on database
     all_deps = db.query(TopicDependency).all()
     dep_set = set()

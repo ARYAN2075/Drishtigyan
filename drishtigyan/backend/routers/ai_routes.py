@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from .. import models, auth
-from ..database import get_db
-from ..services.gemini_service import explain_gap, generate_study_plan
+import models, auth
+from database import get_db
+from services.gemini_service import explain_gap, generate_study_plan
 
 router = APIRouter()
 
